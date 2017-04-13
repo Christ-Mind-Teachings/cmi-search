@@ -4,10 +4,8 @@
 function sortResults(result) {
   var key;
 
-  console.log("sort search results");
   for (key in result) {
     if (Array.isArray(result[key])) {
-      console.log("sorting %s", key);
       result[key].sort(function(a,b) {
         return a.key - b.key;
       });
@@ -64,6 +62,18 @@ function womProcessing(result, book, info) {
       }
       result.wok.push(info);
       break;
+    case "tjl":
+      if (!result.tjl) {
+        result.tjl = [];
+      }
+      result.tjl.push(info);
+      break;
+    case "wos":
+      if (!result.wos) {
+        result.wos = [];
+      }
+      result.wos.push(info);
+      break;
     case "early":
       if (!result.early) {
         result.early = [];
@@ -91,7 +101,6 @@ function processQueryItem(result, source, book, info) {
       break;
   }
 }
-
 
 /*
  * filter result set
@@ -273,6 +282,7 @@ module.exports = {
   filter: filter,
   processQueryItem: processQueryItem,
   sortResults: sortResults,
+  prepareQueryString: prepareQueryString,
   getContext: getContext
 };
 

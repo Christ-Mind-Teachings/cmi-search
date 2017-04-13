@@ -21,6 +21,7 @@ api.post("/search", function (request) {
     domain: "https://www.christmind.info",
     message: "OK"
   };
+  var searchResults = [];
 
   var parms = search.parseRequest(request);
 
@@ -36,69 +37,87 @@ api.post("/search", function (request) {
 
   console.log("POST /search: ", request.body);
 
-  var dbParams = {
-    TableName: parms.source,
-    ProjectionExpression: "book, bid, #kee, #unt, pid, #txt",
-    FilterExpression: "contains(#txt, :v_qs)",
-    ExpressionAttributeNames: {
-      "#unt": "unit",
-      "#txt": "text",
-      "#kee": "key"
-    },
-    ExpressionAttributeValues: {
-      ":v_qs": parms.queryTransformed
-    }
-  };
+  function scan(options) {
+    var parms = {
+      TableName: options.source,
+      ProjectionExpression: "book, bid, #kee, #unt, pid, #txt",
+      FilterExpression: "contains(#txt, :v_qs)",
+      ExpressionAttributeNames: {
+        "#unt": "unit",
+        "#txt": "text",
+        "#kee": "key"
+      },
+      ExpressionAttributeValues: {
+        ":v_qs": options.queryTransformed
+      }
+    };
 
-  if (parms.startKey) {
-    //console.log("api.post assigning startKey to dbParams.ExclusiveStartKen");
-    dbParams.ExclusiveStartKey = parms.startKey;
+    if (options.startKey) {
+      parms.ExclusiveStartKey = options.startKey;
+    }
+
+    return dynamoDb.scan(parms).promise();
   }
 
-  console.log("api.post calling dynamoDb");
-  return dynamoDb.scan(dbParams).promise().then(function(response) {
-    var i;
+  function generateSearchResponse(parms) {
     var filteredCount = 0;
-    //console.log("api.post-scan returned, processing results");
+    var i;
 
-    for (i = 0; i < response.Items.length; i++) {
-      var info = {};
-      var item = response.Items[i];
+    for (i=0; i < searchResults.length; i++) {
+      searchResults[i].Items.forEach(function(val) {
+        var info = {};
 
-      //filter matches from result set returned to user to
-      //user specified terms or default to word boundaries
-      if (search.filter(parms, item.text)) {
-        //console.log("key: %s filtered from result set", item.key);
-        continue;
-      }
+        // if not filtered process item
+        if (!search.filter(parms, val.text)) {
+          filteredCount++;
 
-      filteredCount++;
-      info.table = parms.source;
-      info.book = item.book;
-      info.unit = item.unit;
-      info.location = "#p" + item.pid;
-      info.key = item.key;
-      info.base = "/" + parms.source + "/" + item.book + "/" + item.unit + "/";
-      info.context = search.getContext(parms.queryTransformed, parms.query, item.text, parms.width);
+          info.table = parms.source;
+          info.book = val.book;
+          info.unit = val.unit;
+          info.location = "#p" + val.pid;
+          info.key = val.key;
+          info.base = "/" + parms.source + "/" + val.book + "/" + val.unit + "/";
 
-      search.processQueryItem(result, parms.source, item.book, info);
+          info.context = search.getContext(parms.queryTransformed, parms.query, val.text, parms.width);
+          search.processQueryItem(result, parms.source, val.book, info);
+        }
+      });
+    }
 
+    //alert caller that not all rows were scanned in the search
+    if (parms.startKey) {
+      result.startKey = parms.startKey;
+      result.message = "Incomplete Result";
     }
 
     result.count = filteredCount;
     search.sortResults(result);
-
-    //inform caller not all db records scanned
-    if (typeof response.LastEvaluatedKey !== "undefined") {
-      result.startKey = response.LastEvaluatedKey;
-    }
-
     return result;
+  }
 
-  }, function(err) {
-    console.log("dynamoDb error", err);
-    result.message = "Database error";
-    result.error = err;
+return scan(parms).then(function(response) {
+  if (response.LastEvaluatedKey) {
+    searchResults.push(response);
+    parms.startKey = response.LastEvaluatedKey;
+    //console.log("response1: count: %s, startKey: ", response.Items.length, parms.startKey);
+    return scan(parms);
+  }
+  else {
+    return response;
+  }
+}).then(function(response) {
+  searchResults.push(response);
+  if (response.startKey) {
+    parms.startKey = response.startKey;
+  }
+  else {
+    delete parms.startKey;
+  }
+  return generateSearchResponse(parms);
+
+  }).catch(function(err) {
+    console.error("dberror: %s", err.message);
+    result.message = err.message;
     return result;
   });
 
