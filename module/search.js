@@ -80,6 +80,12 @@ function womProcessing(result, book, info) {
       }
       result.early.push(info);
       break;
+    case "questions":
+      if (!result.questions) {
+        result.questions = [];
+      }
+      result.questions.push(info);
+      break;
     default:
       if (!result.unknown) {
         result.unknown = [];
