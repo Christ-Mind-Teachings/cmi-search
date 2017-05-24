@@ -95,6 +95,23 @@ function womProcessing(result, book, info) {
   }
 }
 
+function acimProcessing(result, book, info) {
+  switch(book) {
+    case "text":
+      if (!result.text) {
+        result.text = [];
+      }
+      result.text.push(info);
+      break;
+    default:
+      if (!result.unknown) {
+        result.unknown = [];
+      }
+      result.unknown.push(info);
+      break;
+  }
+}
+
 function processQueryItem(result, source, book, info) {
   switch(source) {
     case "nwffacim":
@@ -102,6 +119,9 @@ function processQueryItem(result, source, book, info) {
       break;
     case "wom":
       womProcessing(result, book, info);
+      break;
+    case "acim":
+      acimProcessing(result, book, info);
       break;
     default:
       break;
@@ -143,7 +163,7 @@ function filter(request, text) {
 
 function validQuerySource(source) {
   //valid query sources
-  var tables = ["wom", "nwffacim"];
+  var tables = ["acim", "wom", "nwffacim"];
   var i;
 
   if (!source) {
