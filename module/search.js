@@ -103,6 +103,18 @@ function acimProcessing(result, book, info) {
       }
       result.text.push(info);
       break;
+    case "manual":
+      if (!result.manual) {
+        result.manual = [];
+      }
+      result.manual.push(info);
+      break;
+    case "workbook":
+      if (!result.workbook) {
+        result.workbook = [];
+      }
+      result.workbook.push(info);
+      break;
     default:
       if (!result.unknown) {
         result.unknown = [];
