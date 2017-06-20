@@ -38,26 +38,44 @@ api.post("/search", function (request) {
   console.log("POST /search: ", request.body);
 
   function scan(options) {
-    var parms = {
-      TableName: options.source,
-      ProjectionExpression: "book, bid, #kee, #unt, pid, #txt",
-      FilterExpression: "contains(#txt, :v_qs)",
-      ExpressionAttributeNames: {
-        "#unt": "unit",
-        "#txt": "text",
-        "#kee": "key"
-      },
-      ExpressionAttributeValues: {
-        ":v_qs": options.queryTransformed
+    var promise = new Promise(function(resolve, reject) {
+
+      var parms = {
+        TableName: options.source,
+        ProjectionExpression: "book, bid, #kee, #unt, pid, #txt",
+        FilterExpression: "contains(#txt, :v_qs)",
+        ExpressionAttributeNames: {
+          "#unt": "unit",
+          "#txt": "text",
+          "#kee": "key"
+        },
+        ExpressionAttributeValues: {
+          ":v_qs": options.queryTransformed
+        }
+      };
+
+      function cb(err, response) {
+        if (err) {
+          reject(err);
+        }
+        else if (response.LastEvaluatedKey) {
+          console.log("response: count: %s, startKey: ", response.Items.length, response.LastEvaluatedKey);
+          parms.ExclusiveStartKey = response.LastEvaluatedKey;
+          dynamoDb.scan(parms, cb);
+        }
+        else {
+          resolve(searchResults);
+        }
+        searchResults.push(response);
       }
-    };
 
-    if (options.startKey) {
-      parms.ExclusiveStartKey = options.startKey;
-    }
+      dynamoDb.scan(parms, cb);
 
-    return dynamoDb.scan(parms).promise();
+    });
+
+    return promise;
   }
+
 
   function generateSearchResponse(parms) {
     var filteredCount = 0;
@@ -84,42 +102,18 @@ api.post("/search", function (request) {
       });
     }
 
-    //alert caller that not all rows were scanned in the search
-    if (parms.startKey) {
-      result.startKey = parms.startKey;
-      result.message = "Incomplete Result";
-    }
-
     result.count = filteredCount;
     search.sortResults(result);
     return result;
   }
 
 return scan(parms).then(function(response) {
-  if (response.LastEvaluatedKey) {
-    searchResults.push(response);
-    parms.startKey = response.LastEvaluatedKey;
-    //console.log("response1: count: %s, startKey: ", response.Items.length, parms.startKey);
-    return scan(parms);
-  }
-  else {
-    return response;
-  }
-}).then(function(response) {
-  searchResults.push(response);
-  if (response.startKey) {
-    parms.startKey = response.startKey;
-  }
-  else {
-    delete parms.startKey;
-  }
   return generateSearchResponse(parms);
-
   }).catch(function(err) {
     console.error("dberror: %s", err.message);
     result.message = err.message;
     return result;
   });
-
 });
+
 

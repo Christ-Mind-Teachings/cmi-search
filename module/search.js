@@ -33,6 +33,96 @@ function nwffacimProcessing(result, book, info) {
       }
       result.a2002.push(info);
       break;
+    case "2003":
+      if (!result.a2003) {
+        result.a2003 = [];
+      }
+      result.a2003.push(info);
+      break;
+    case "2004":
+      if (!result.a2004) {
+        result.a2004 = [];
+      }
+      result.a2004.push(info);
+      break;
+    case "2005":
+      if (!result.a2005) {
+        result.a2005 = [];
+      }
+      result.a2005.push(info);
+      break;
+    case "2006":
+      if (!result.a2006) {
+        result.a2006 = [];
+      }
+      result.a2006.push(info);
+      break;
+    case "2007":
+      if (!result.a2007) {
+        result.a2007 = [];
+      }
+      result.a2007.push(info);
+      break;
+    case "2008":
+      if (!result.a2008) {
+        result.a2008 = [];
+      }
+      result.a2008.push(info);
+      break;
+    case "2009":
+      if (!result.a2009) {
+        result.a2009 = [];
+      }
+      result.a2009.push(info);
+      break;
+    case "2010":
+      if (!result.a2010) {
+        result.a2010 = [];
+      }
+      result.a2010.push(info);
+      break;
+    case "2011":
+      if (!result.a2011) {
+        result.a2011 = [];
+      }
+      result.a2011.push(info);
+      break;
+    case "2012":
+      if (!result.a2012) {
+        result.a2012 = [];
+      }
+      result.a2012.push(info);
+      break;
+    case "2013":
+      if (!result.a2013) {
+        result.a2013 = [];
+      }
+      result.a2013.push(info);
+      break;
+    case "2014":
+      if (!result.a2014) {
+        result.a2014 = [];
+      }
+      result.a2014.push(info);
+      break;
+    case "2015":
+      if (!result.a2015) {
+        result.a2015 = [];
+      }
+      result.a2015.push(info);
+      break;
+    case "2016":
+      if (!result.a2016) {
+        result.a2016 = [];
+      }
+      result.a2016.push(info);
+      break;
+    case "2017":
+      if (!result.a2017) {
+        result.a2017 = [];
+      }
+      result.a2017.push(info);
+      break;
     default:
       if (!result.unknown) {
         result.unknown = [];
