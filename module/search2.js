@@ -25,101 +25,101 @@ function nwffacimProcessing(result, book, info) {
       }
       result.grad.push(info);
       break;
-    case "2002":
-      if (!result.a2002) {
-        result.a2002 = [];
+    case "acim/2002":
+      if (!result.acim_2002) {
+        result.acim_2002 = [];
       }
-      result.a2002.push(info);
+      result.acim_2002.push(info);
       break;
-    case "2003":
-      if (!result.a2003) {
-        result.a2003 = [];
+    case "acim/2003":
+      if (!result.acim_2003) {
+        result.acim_2003 = [];
       }
-      result.a2003.push(info);
+      result.acim_2003.push(info);
       break;
-    case "2004":
-      if (!result.a2004) {
-        result.a2004 = [];
+    case "acim/2004":
+      if (!result.acim_2004) {
+        result.acim_2004 = [];
       }
-      result.a2004.push(info);
+      result.acim_2004.push(info);
       break;
-    case "2005":
-      if (!result.a2005) {
-        result.a2005 = [];
+    case "acim/2005":
+      if (!result.acim_2005) {
+        result.acim_2005 = [];
       }
-      result.a2005.push(info);
+      result.acim_2005.push(info);
       break;
-    case "2006":
-      if (!result.a2006) {
-        result.a2006 = [];
+    case "acim/2006":
+      if (!result.acim_2006) {
+        result.acim_2006 = [];
       }
-      result.a2006.push(info);
+      result.acim_2006.push(info);
       break;
-    case "2007":
-      if (!result.a2007) {
-        result.a2007 = [];
+    case "acim/2007":
+      if (!result.acim_2007) {
+        result.acim_2007 = [];
       }
-      result.a2007.push(info);
+      result.acim_2007.push(info);
       break;
-    case "2008":
-      if (!result.a2008) {
-        result.a2008 = [];
+    case "acim/2008":
+      if (!result.acim_2008) {
+        result.acim_2008 = [];
       }
-      result.a2008.push(info);
+      result.acim_2008.push(info);
       break;
-    case "2009":
-      if (!result.a2009) {
-        result.a2009 = [];
+    case "acim/2009":
+      if (!result.acim_2009) {
+        result.acim_2009 = [];
       }
-      result.a2009.push(info);
+      result.acim_2009.push(info);
       break;
-    case "2010":
-      if (!result.a2010) {
-        result.a2010 = [];
+    case "acim/2010":
+      if (!result.acim_2010) {
+        result.acim_2010 = [];
       }
-      result.a2010.push(info);
+      result.acim_2010.push(info);
       break;
-    case "2011":
-      if (!result.a2011) {
-        result.a2011 = [];
+    case "acim/2011":
+      if (!result.acim_2011) {
+        result.acim_2011 = [];
       }
-      result.a2011.push(info);
+      result.acim_2011.push(info);
       break;
-    case "2012":
-      if (!result.a2012) {
-        result.a2012 = [];
+    case "acim/2012":
+      if (!result.acim_2012) {
+        result.acim_2012 = [];
       }
-      result.a2012.push(info);
+      result.acim_2012.push(info);
       break;
-    case "2013":
-      if (!result.a2013) {
-        result.a2013 = [];
+    case "acim/2013":
+      if (!result.acim_2013) {
+        result.acim_2013 = [];
       }
-      result.a2013.push(info);
+      result.acim_2013.push(info);
       break;
-    case "2014":
-      if (!result.a2014) {
-        result.a2014 = [];
+    case "acim/2014":
+      if (!result.acim_2014) {
+        result.acim_2014 = [];
       }
-      result.a2014.push(info);
+      result.acim_2014.push(info);
       break;
-    case "2015":
-      if (!result.a2015) {
-        result.a2015 = [];
+    case "acim/2015":
+      if (!result.acim_2015) {
+        result.acim_2015 = [];
       }
-      result.a2015.push(info);
+      result.acim_2015.push(info);
       break;
-    case "2016":
-      if (!result.a2016) {
-        result.a2016 = [];
+    case "acim/2016":
+      if (!result.acim_2016) {
+        result.acim_2016 = [];
       }
-      result.a2016.push(info);
+      result.acim_2016.push(info);
       break;
-    case "2017":
-      if (!result.a2017) {
-        result.a2017 = [];
+    case "acim/2017":
+      if (!result.acim_2017) {
+        result.acim_2017 = [];
       }
-      result.a2017.push(info);
+      result.acim_2017.push(info);
       break;
     default:
       if (!result.unknown) {
