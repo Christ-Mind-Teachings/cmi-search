@@ -1,3 +1,5 @@
+/*eslint no-console: "warn"*/
+
 var AWS = require("aws-sdk");
 var dynamoDb = new AWS.DynamoDB.DocumentClient();
 

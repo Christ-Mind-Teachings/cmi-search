@@ -1,3 +1,4 @@
+/*eslint no-console: "warn"*/
 
 function sortResults(result) {
   var key;

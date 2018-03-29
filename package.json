@@ -1,13 +1,13 @@
 {
-  "name": "cmi2api",
+  "name": "cmi2search",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "claudia create --name cmi2-api --region us-east-1 --api-module index --policies policies",
+    "start": "claudia create --name cmi2-search --region us-east-1 --api-module index --timeout 10 --policies policies",
     "deploy": "claudia --no-optional-dependencies update",
     "destroy": "claudia destroy",
-    "predeploy": "eslint -c ./config/eslint.json ./index.js"
+    "predeploy": "eslint index.js module/**"
   },
   "author": "",
   "license": "ISC",

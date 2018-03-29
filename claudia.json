@@ -1,11 +1,11 @@
 {
   "lambda": {
-    "role": "cmi2-api-executor",
-    "name": "cmi2-api",
+    "role": "cmi2-search-executor",
+    "name": "cmi2-search",
     "region": "us-east-1"
   },
   "api": {
-    "id": "s0l2an0odc",
+    "id": "d9lsdwxpfg",
     "module": "index"
   }
 }
