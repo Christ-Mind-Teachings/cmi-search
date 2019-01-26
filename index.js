@@ -114,3 +114,38 @@ api.post("/acim", function (request) {
     });
 });
 
+api.post("/raj", function (request) {
+  var search = require("./module/raj/search");
+  var scan = require("./module/raj/scan");
+  var generateResponse = require("./module/raj/response");
+
+  var searchResults = [];
+  var result = {
+    domain: "https://raj.christmind.info",
+    message: "OK"
+  };
+
+  var parms = search.parseRequest(request);
+  if (parms.error) {
+    result.message = parms.message;
+    return result;
+  }
+
+  result.source = parms.source;
+  result.width = parms.width;
+  result.query = parms.query;
+  result.queryTransformed = parms.queryTransformed;
+
+  //console.log("POST /search: ", request.body);
+
+  return scan(parms, searchResults)
+    .then(function() {
+      return generateResponse(parms, searchResults, result);
+    })
+    .catch(function(err) {
+      console.error("dberror: %s", err.message);
+      result.message = err.message;
+      return result;
+    });
+});
+
