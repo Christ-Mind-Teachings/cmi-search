@@ -3,11 +3,11 @@
 var AWS = require("aws-sdk");
 var dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-function scan(options, searchResults) {
+function scan(table, options, searchResults) {
   var promise = new Promise(function(resolve, reject) {
 
     var parms = {
-      TableName: "wom2",
+      TableName: table,
       ProjectionExpression: "book, #kee, #unt, pid, #txt",
       FilterExpression: "contains(#txt, :v_qs)",
       ExpressionAttributeNames: {
@@ -25,7 +25,7 @@ function scan(options, searchResults) {
         reject(err);
       }
       else if (response.LastEvaluatedKey) {
-        console.log("response: count: %s, startKey: ", response.Items.length, response.LastEvaluatedKey);
+        //console.log("response: count: %s, startKey: ", response.Items.length, response.LastEvaluatedKey);
         parms.ExclusiveStartKey = response.LastEvaluatedKey;
         dynamoDb.scan(parms, cb);
       }

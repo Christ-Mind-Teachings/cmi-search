@@ -1,4 +1,51 @@
-var search = require("./search");
+var search = require("../common/search");
+
+function processQueryItem(result, book, info) {
+  switch(book) {
+    case "woh":
+      if (!result.woh) {
+        result.woh = [];
+      }
+      result.woh.push(info);
+      break;
+    case "wot":
+      if (!result.wot) {
+        result.wot = [];
+      }
+      result.wot.push(info);
+      break;
+    case "wok":
+      if (!result.wok) {
+        result.wok = [];
+      }
+      result.wok.push(info);
+      break;
+    case "tjl":
+      if (!result.tjl) {
+        result.tjl = [];
+      }
+      result.tjl.push(info);
+      break;
+    case "wos":
+      if (!result.wos) {
+        result.wos = [];
+      }
+      result.wos.push(info);
+      break;
+    case "early":
+      if (!result.early) {
+        result.early = [];
+      }
+      result.early.push(info);
+      break;
+    default:
+      if (!result.unknown) {
+        result.unknown = [];
+      }
+      result.unknown.push(info);
+      break;
+  }
+}
 
 function generateSearchResponse(parms, searchResults, result) {
   var filteredCount = 0;
@@ -18,7 +65,7 @@ function generateSearchResponse(parms, searchResults, result) {
         info.key = val.parakey;
 
         info.context = search.getContext(parms.queryTransformed, parms.query, val.text, parms.width);
-        search.processQueryItem(result, val.book, info);
+        processQueryItem(result, val.book, info);
       }
     });
   }

@@ -1,4 +1,33 @@
-var search = require("./search");
+var search = require("../common/search");
+
+function processQueryItem(result, book, info) {
+  switch(book) {
+    case "course":
+      if (!result.course) {
+        result.course = [];
+      }
+      result.course.push(info);
+      break;
+    case "treatise":
+      if (!result.treatise) {
+        result.treatise = [];
+      }
+      result.treatise.push(info);
+      break;
+    case "dialog":
+      if (!result.dialog) {
+        result.dialog = [];
+      }
+      result.dialog.push(info);
+      break;
+    default:
+      if (!result.unknown) {
+        result.unknown = [];
+      }
+      result.unknown.push(info);
+      break;
+  }
+}
 
 function generateSearchResponse(parms, searchResults, result) {
   var filteredCount = 0;
@@ -18,7 +47,7 @@ function generateSearchResponse(parms, searchResults, result) {
         info.key = val.parakey;
 
         info.context = search.getContext(parms.queryTransformed, parms.query, val.text, parms.width);
-        search.processQueryItem(result, val.book, info);
+        processQueryItem(result, val.book, info);
       }
     });
   }

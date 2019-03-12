@@ -1,4 +1,39 @@
-var search = require("./search");
+var search = require("../common/search");
+
+function processQueryItem(result, book, info) {
+  switch(book) {
+    case "preface":
+      if (!result.preface) {
+        result.preface = [];
+      }
+      result.preface.push(info);
+      break;
+    case "text":
+      if (!result.text) {
+        result.text = [];
+      }
+      result.text.push(info);
+      break;
+    case "workbook":
+      if (!result.workbook) {
+        result.workbook = [];
+      }
+      result.workbook.push(info);
+      break;
+    case "manual":
+      if (!result.manual) {
+        result.manual = [];
+      }
+      result.manual.push(info);
+      break;
+    default:
+      if (!result.unknown) {
+        result.unknown = [];
+      }
+      result.unknown.push(info);
+      break;
+  }
+}
 
 function generateSearchResponse(parms, searchResults, result) {
   var filteredCount = 0;
@@ -18,7 +53,7 @@ function generateSearchResponse(parms, searchResults, result) {
         info.key = val.parakey;
 
         info.context = search.getContext(parms.queryTransformed, parms.query, val.text, parms.width);
-        search.processQueryItem(result, val.book, info);
+        processQueryItem(result, val.book, info);
       }
     });
   }
