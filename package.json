@@ -7,16 +7,19 @@
     "start": "claudia create --name cmi2-search --region us-east-1 --api-module index --timeout 10 --policies policies",
     "deploy": "claudia --no-optional-dependencies update",
     "destroy": "claudia destroy",
-    "predeploy": "eslint index.js module/**"
+    "predeploy": "eslint index.js module/**",
+    "version": "claudia --version"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "claudia": "^2.10.0",
+    "claudia": "^2.14.3",
     "eslint": "^3.17.1"
   },
   "dependencies": {
-    "claudia-api-builder": "^2.4.1"
+    "axios": "^0.18.0",
+    "claudia-api-builder": "^2.5.1",
+    "mailgun-js": "^0.22.0"
   },
   "optionalDependencies": {
     "aws-sdk": "^2.35.0"
