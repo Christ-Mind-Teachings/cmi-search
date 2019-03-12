@@ -15,13 +15,13 @@ function sortResults(result) {
 function processQueryItem(result, book, info) {
   switch(book) {
     case "course":
-      if (!result.preface) {
+      if (!result.course) {
         result.course = [];
       }
       result.course.push(info);
       break;
     case "treatise":
-      if (!result.text) {
+      if (!result.treatise) {
         result.treatise = [];
       }
       result.treatise.push(info);
