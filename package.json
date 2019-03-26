@@ -8,20 +8,19 @@
     "deploy": "claudia --no-optional-dependencies update",
     "destroy": "claudia destroy",
     "predeploy": "eslint index.js module/**",
-    "version": "claudia --version"
+    "version": "claudia --version",
+    "update": "claudia update --runtime nodejs8.10"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "claudia": "^2.14.3",
-    "eslint": "^3.17.1"
+    "claudia": "^5.4.2",
+    "eslint": "^5.15.3"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "claudia-api-builder": "^2.5.1",
-    "mailgun-js": "^0.22.0"
+    "claudia-api-builder": "^4.1.2"
   },
   "optionalDependencies": {
-    "aws-sdk": "^2.35.0"
+    "aws-sdk": "^2.427.0"
   }
 }
