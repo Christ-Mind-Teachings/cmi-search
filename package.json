@@ -9,13 +9,13 @@
     "destroy": "claudia destroy",
     "predeploy": "eslint index.js module/**",
     "version": "claudia --version",
-    "update": "claudia update --runtime nodejs8.10"
+    "update": "claudia update --runtime nodejs10.x"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "claudia": "^5.4.2",
-    "eslint": "^5.15.3"
+    "claudia": "^5.9.1",
+    "eslint": "^5.16.0"
   },
   "dependencies": {
     "claudia-api-builder": "^4.1.2"
