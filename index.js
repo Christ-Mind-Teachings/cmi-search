@@ -133,6 +133,12 @@ api.post("/acol", function (request) {
   result.query = parms.query;
   result.queryTransformed = parms.queryTransformed;
 
+  //used for ACOL searches
+  result.authorized = parms.authorized;
+
+  //for unauthorized searches, keep track of items filtered because they are restricted
+  result.restricted = 0;
+
   //console.log("POST /search: ", request.body);
 
   return scan("acol", parms, searchResults)

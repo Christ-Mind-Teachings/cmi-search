@@ -70,6 +70,12 @@ function parseRequest(request) {
     parms.query = userRequest.query;
   }
 
+  //used by ACOL searches to filter out restricted content for unauthorized searchers
+  parms.authorized = false;
+  if (userRequest.authorization && userRequest.authorization === "acol") {
+    parms.authorized = true;
+  }
+
   if (userRequest.startKey) {
     parms.startKey = userRequest.startKey;
   }

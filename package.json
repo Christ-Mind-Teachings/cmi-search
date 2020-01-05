@@ -11,7 +11,7 @@
     "version": "claudia --version",
     "update": "claudia update --runtime nodejs10.x"
   },
-  "author": "",
+  "author": "Rick Mercer",
   "license": "ISC",
   "devDependencies": {
     "claudia": "^5.9.1",
