@@ -44,10 +44,17 @@ function filter(request, text) {
   return result;
 }
 
-
 //lowercase and remove punction from query string
 function prepareQueryString(query) {
   var result = query.toLowerCase();
+
+  //remove leading and trailing whitespace
+  result = result.trim();
+
+  //replace two or more whitespaces with one space
+  result = result.replace(/[\s]{2,}/," ");
+
+  //remove non alpha characters
   return result.replace(/[^\w\s]/, "");
 }
 
