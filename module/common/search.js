@@ -45,7 +45,7 @@ function filter(request, text) {
 }
 
 //lowercase and remove punction from query string
-function prepareQueryString(query) {
+function prepareQueryString(query, lang) {
   var result = query.toLowerCase();
 
   //remove leading and trailing whitespace
@@ -55,12 +55,14 @@ function prepareQueryString(query) {
   result = result.replace(/[\s]{2,}/," ");
 
   //remove non alpha characters
-  //Note: this doesn't work for Polish so going to remove it
-  //return result.replace(/[^\w\s]/, "");
-  return result;
+  if (lang === "pl") {
+    return result.replace(/[^a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]/, "");
+  }
+
+  return result.replace(/[^\w\s]/, "");
 }
 
-function parseRequest(request) {
+function parseRequest(request, lang="en") {
   var parms = {message: []};
 
   //if no parms given set error indicator and return
@@ -103,7 +105,7 @@ function parseRequest(request) {
     parms.error = true;
   }
   else {
-    parms.queryTransformed = prepareQueryString(parms.query);
+    parms.queryTransformed = prepareQueryString(parms.query, lang);
     parms.error = false;
   }
 

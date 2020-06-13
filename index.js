@@ -196,7 +196,8 @@ api.post("/pwom", function (request) {
     message: "OK"
   };
 
-  var parms = search.parseRequest(request);
+  //indicate language is Polish
+  var parms = search.parseRequest(request, "pl");
   if (parms.error) {
     result.message = parms.message;
     return result;
