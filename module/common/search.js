@@ -55,7 +55,9 @@ function prepareQueryString(query) {
   result = result.replace(/[\s]{2,}/," ");
 
   //remove non alpha characters
-  return result.replace(/[^\w\s]/, "");
+  //Note: this doesn't work for Polish so going to remove it
+  //return result.replace(/[^\w\s]/, "");
+  return result;
 }
 
 function parseRequest(request) {

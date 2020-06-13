@@ -185,3 +185,35 @@ api.post("/acimoe", function (request) {
     });
 });
 
+api.post("/pwom", function (request) {
+  var search = require("./module/common/search");
+  var scan = require("./module/common/scan");
+  var generateResponse = require("./module/pwom/response");
+
+  var searchResults = [];
+  var result = {
+    domain: "https://pwom.christmind.info",
+    message: "OK"
+  };
+
+  var parms = search.parseRequest(request);
+  if (parms.error) {
+    result.message = parms.message;
+    return result;
+  }
+
+  result.source = parms.source;
+  result.width = parms.width;
+  result.query = parms.query;
+  result.queryTransformed = parms.queryTransformed;
+
+  return scan("pwom", parms, searchResults)
+    .then(function() {
+      return generateResponse(parms, searchResults, result);
+    })
+    .catch(function(err) {
+      result.message = err.message;
+      return result;
+    });
+});
+
