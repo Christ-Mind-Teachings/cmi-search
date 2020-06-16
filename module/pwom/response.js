@@ -56,7 +56,7 @@ function generateSearchResponse(parms, searchResults, result) {
       var info = {};
 
       // if not filtered process item
-      if (!search.filter(parms, val.text)) {
+      if (!search.filter(parms, val.text, "pl")) {
         filteredCount++;
 
         info.book = val.book;

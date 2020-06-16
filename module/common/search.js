@@ -17,7 +17,7 @@ function sortResults(result) {
  *
  * Default filter: all matches must start at word boundary, filter all the rest
  */
-function filter(request, text) {
+function filter(request, text, lang = "en") {
   var pos;
   var result = false;
 
@@ -34,9 +34,19 @@ function filter(request, text) {
       console.log("Yikes!! filter(): query string not found in text");
     }
     else if (pos > 0) {
-      if (/\w/.test(text.charAt(pos-1))) {
-        //console.log("filtered paragraph(%s): ", pos, text);
-        result = true;
+      let result;
+      switch (lang) {
+        //look for whitespace one char before the match, return false is found
+        case "pl":
+          //console.log(`${request.queryTransformed} found at pos ${pos}`);
+          //console.log(`=> "${text.substring(pos-1, pos + 10 + request.queryTransformed.length)}"`);
+          result = /\s/.test(text.charAt(pos-1));
+          //result = /a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ/.test(text.charAt(pos-1));
+          //console.log("test: %s", result);
+          //console.log("----------");
+          return !result;
+        default:
+          return /\w/.test(text.charAt(pos-1));
       }
     }
   }
@@ -46,7 +56,7 @@ function filter(request, text) {
 
 //lowercase and remove punction from query string
 function prepareQueryString(query, lang) {
-  var result = query.toLowerCase();
+  let result = query.toLowerCase();
 
   //remove leading and trailing whitespace
   result = result.trim();
@@ -55,11 +65,12 @@ function prepareQueryString(query, lang) {
   result = result.replace(/[\s]{2,}/," ");
 
   //remove non alpha characters
-  if (lang === "pl") {
-    return result.replace(/[^a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]/, "");
+  switch (lang) {
+    case "pl":
+      return result.replace(/[^a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]/, "");
+    default:
+      return result.replace(/[^\w\s]/, "");
   }
-
-  return result.replace(/[^\w\s]/, "");
 }
 
 function parseRequest(request, lang="en") {
