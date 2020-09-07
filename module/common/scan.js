@@ -25,7 +25,6 @@ function scan(table, options, searchResults) {
         reject(err);
       }
       else if (response.LastEvaluatedKey) {
-        //console.log("response: count: %s, startKey: ", response.Items.length, response.LastEvaluatedKey);
         parms.ExclusiveStartKey = response.LastEvaluatedKey;
         dynamoDb.scan(parms, cb);
       }
